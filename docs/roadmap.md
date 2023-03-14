@@ -6,7 +6,7 @@
 
 - Design basic language syntax/semantics.
 - Implement lexer/parser, probably with parser generator (I'm considering https://ohmjs.org/, https://nearley.js.org/, and https://github.com/EoinDavey/tsPEG).
-- Implement type system with typechecker - this should definitely include primitive types, structs, algebraic data types w/ pattern matching.
+- Implement type system with typechecker - this should definitely include primitive types, structs, algebraic data types w/ pattern matching, tuples.
 - Implement interpreter to run Faust programs.
   - This will require a _small_ number of native functions - probably `print()`, `printLine()`, and `readLine()` for I/O, and _possibly_ `parseInt()` and `parseFloat()`.
 - Testing strategy - focus on running end-to-end tests on a small corpus of sample Faust programs (both valid and invalid).
