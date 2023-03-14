@@ -41,6 +41,7 @@
   - runs compiler (`node dist/main.js`) to compile Faust to LLVM IR
   - runs `llc` to compile LLVM IR to assembly
   - runs `gcc` to compile and link assembly to generate executable.
+  - (I may want to put intermediate results in a `faust_build` directory or something, and add that to this project's `.gitignore`)
 - project README should describe requirements to run compiler (limited to Ubuntu-based linux distros; need `build-essential` and requirements from https://github.com/ApsarasX/llvm-bindings#install-on-ubuntu)
 - automated tests in CI for comparing output of interpreter and compiler implementations of Faust, ensuring they produce the same result on valid Faust programs in test corpus. (These should pass at this stage, but may want to be non-required in subsequent stages, so I can try out implementations in interpreter before adding them to the compiler)
 
