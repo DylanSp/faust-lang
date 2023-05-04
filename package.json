@@ -28,5 +28,8 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "variant": "^2.1.0"
   }
 }
