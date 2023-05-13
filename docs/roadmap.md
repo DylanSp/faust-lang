@@ -95,8 +95,8 @@
   - Module system.
 - Adding contract functionality to new features:
   - Struct invariants, similar to [Eiffel's class invariants](https://www.eiffel.org/doc/eiffel/I2E-_Design_by_Contract_and_Assertions)
-    - Public invariants - only checked on calling/returning from public methods, accessing/setting public fields.
-    - Private invariants - checked on calling/returning from _all_ methods, accessing/setting _all_ fields.
+    - Public/external invariants - only checked on calling/returning from public methods, accessing/setting public fields.
+    - Private/internal invariants - checked on calling/returning from _all_ methods, accessing/setting _all_ fields.
 - Implementing all of this functionality in the interpreted implementation.
 
 ### Possible goals

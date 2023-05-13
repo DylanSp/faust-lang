@@ -20,7 +20,8 @@
     - Getting a function type based on its return type and parameter types (shouldn't need to ever get a function type with varargs)
     - Writing a function - takes a function type, function name, and a callback, creates an `llvm.Function`, puts a basic block into it and sets the insert point into it, then calls the callback with the `llvm.Function` to generate the function's code.
     - Generating external function definitions for `libc` functions I need to call.
-- Probably compile down to my own IR with basic blocks (check if that's what LLVM Kaleidoscope tutorial suggests to do before calling LLVM API), then call the LLVM API to codegen from this
+- Basic block generation - compile down to my own IR with basic blocks, then call the LLVM API to codegen from that.
+  - I _don't_ need to generate phi nodes for handling assignments to mutable variables (see [LLVM tutorial ch7](https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/LangImpl07.html)), but I still need to generate the basic block graph myself in general.
 - Once I add contracts, annotate the basic block graph with extra blocks to track pre/post-conditions
 - Potentially do optimizations of my own at this point, issue compile errors if an assertion will always be false?
 
@@ -29,6 +30,7 @@
 - implication should either be a keyword or a different symbol than `=>`, to avoid confusion with other languages' arrow functions
   - Possible alternate symbol: `~>`?
   - Having an `implies` keyword probably makes the most sense.
+- probably use `external`/`internal` for struct invariants - `external` are only checked on calling/returning from public methods, `internal` are checked on calling/returning _all_ methods. Using `private` might imply that those invariants are only checked on private methods.
 - Variable names in pre/post-conditions
   - `requires`/`ensures` blocks probably shouldn't repeat argument names, since that's just repetitious
   - `requires` expressions/blocks should have access to the same variable names as in the function definition
