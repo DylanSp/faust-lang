@@ -16,6 +16,7 @@
 - Requires semicolons for ease of implementation.
 - Allows statements (not purely expression-based) for ease of writing Faust programs to test with.
 - Types are always explicit in variable and function definitions, and written after variable name, i.e. `let len: i64`.
+- Variables have to be initialized on declaration, i.e. no standalone `let x;` statements.
 
 ## Type system
 

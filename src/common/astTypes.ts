@@ -20,9 +20,11 @@ export type Expression = VariantOf<typeof Expression>;
 
 export const Statement = variantModule({
   statementExpression: fields<{ expression: Expression }>(),
+  variableDeclaration: fields<{ name: string; value: Expression }>(),
+  variableAssignment: fields<{ name: string; value: Expression }>(),
   ifStatement: fields<{ condition: Expression; thenBlock: Block; elseBlock: Block }>(),
   returnStatement: fields<{ returnedValue?: Expression }>(),
-  // TODO - loop statements, variable declaration/assignments, etc.
+  // TODO - loop statements, etc.
 });
 export type Statement = VariantOf<typeof Statement>;
 
