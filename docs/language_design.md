@@ -10,6 +10,7 @@
 - Structs
 - Algebraic data types (that can be pattern-matched on)
 - Fixed-length arrays (always bound-checked)
+- **No** null type (use an Optional ADT instead)
 
 ## Syntax
 
