@@ -39,7 +39,7 @@ export const UnsugaredStatement = variantModule({
   // TODO - struct field setting
 });
 
-// use full type definition so I can pull out UnsugaredStatement<"variableDeclaration"> for use in forLoop type definition
+// use full type definition so I can pull out specific types for use in the forLoop type definition
 // see https://paarthenon.github.io/variant/docs/articles/that-type/
 export type UnsugaredStatement<T extends TypeNames<typeof UnsugaredStatement> = undefined> = VariantOf<
   typeof UnsugaredStatement,
@@ -52,9 +52,10 @@ export const SugaredStatement = variantModule({
   forLoop: fields<{
     initializer: UnsugaredStatement<"variableDeclaration">;
     condition: Expression;
-    increment: Expression;
+    // to figure out what type increment is, use if (isOfType(forLoopStatement.increment, Expression))
+    increment: Expression | UnsugaredStatement<"variableAssignment">;
     body: Block;
-  }>,
+  }>(),
 });
 export type SugaredStatement = VariantOf<typeof SugaredStatement>;
 

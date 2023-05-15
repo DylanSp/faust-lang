@@ -18,6 +18,10 @@
 - Allows statements (not purely expression-based) for ease of writing Faust programs to test with.
 - Types are always explicit in variable and function definitions, and written after variable name, i.e. `let len: i64`.
 - Variables have to be initialized on declaration, i.e. no standalone `let x;` statements.
+- `for` loops have several requirements for ease of implementation:
+  - They _must_ have a variable declaration in their first clause.
+  - They _must_ have an expression in their second clause for use as a condition.
+  - They _must_ have either an expression (i.e. `i++`) or a variable assignment (i.e. `i = i + 2`) in their third clause.
 
 ## Type system
 
