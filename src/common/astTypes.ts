@@ -10,10 +10,8 @@ export const valueIdentifierIso = iso<ValueIdentifier>();
 export type TypeIdentifier = Newtype<{ readonly TypeIdentifier: unique symbol }, string>;
 export const typeIdentifierIso = iso<TypeIdentifier>();
 
-const noFields = fields<Record<string, never>>();
-
 export const TopLevelDeclaration = variantModule({
-  typeDeclaration: noFields,
+  typeDeclaration: {}, // TODO - fields
   functionDeclaration: fields<{ name: ValueIdentifier }>(), // TODO - other fields
   // TODO - anything else?
 });
@@ -24,7 +22,7 @@ export const Expression = variantModule({
   fpLiteral: fields<{ value: number }>(),
   boolLiteral: fields<{ value: boolean }>(),
   stringLiteral: fields<{ value: string }>(),
-  identifier: fields<{ name: ValueIdentifier }>(), // TODO - rename to "variableRef" or similar?
+  valueIdentifier: fields<{ name: ValueIdentifier }>(), // TODO - rename to "variableRef" or similar?
   // TODO - unary operations, binary operations, function calls, field accesses, match expressions
   // NOTE - no lambdas (no higher-order functions) currently
 });
