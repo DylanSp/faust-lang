@@ -21,7 +21,7 @@ export const Expression = variantModule({
   intLiteral: fields<{ value: bigint }>(),
   fpLiteral: fields<{ value: number }>(),
   boolLiteral: fields<{ value: boolean }>(),
-  // TODO - string literal, depending on how I end up designing that?
+  stringLiteral: fields<{ value: string }>(),
   identifier: fields<{ name: ValueIdentifier }>(), // TODO - rename to "variableRef" or similar?
   // TODO - unary operations, binary operations, function calls, field accesses, match expressions
   // NOTE - no lambdas (no higher-order functions) currently
