@@ -24,10 +24,6 @@
 
 ### Questions to answer
 
-- How do I want to handle strings in Faust?
-  - Option 1 - include characters as a primitive type, strings are effectively an array of characters. This maps to C semantics fairly well, which will simplify the compiled implementation, but I don't know if I want to expose characters as a separate type in Faust.
-  - Option 2 - include strings as a primitive type, but restrict them to ASCII only. This would allow using basic `libc` functions in the compiled implementation without needing to expose characters as a Faust type.
-  - Option 3 - full Unicode support (presumably via UTF-8). This allows the most flexibility, but it also complicates implementation.
 - How do I want to handle mutability/immutability of variables, and if mutability is allowed, handling references?
   - I'm sort of inclined to start with an approach of everything being immutable, function arguments are copied (passed by value, effectively), for the sake of simplicity. This might make writing example programs more difficult, though.
 

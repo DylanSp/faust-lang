@@ -5,7 +5,7 @@
 - 64-bit integers - `int64`
 - double-precision floating-point - `double`/`fp64`
 - Booleans
-- Strings (see [Roadmap stage 1](https://github.com/DylanSp/faust-lang/blob/main/docs/roadmap.md#questions-to-answer) for options on how to implement)
+- Strings. These are required to be ASCII (for ease of implementation), but are treated as an opaque type within Faust, without any sort of underlying `char` type.
 - Tuples
 - Structs
 - Algebraic data types (that can be pattern-matched on)
