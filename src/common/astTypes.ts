@@ -1,12 +1,14 @@
 import { Option } from "fp-ts/lib/Option";
-import { Newtype } from "newtype-ts";
+import { Newtype, iso } from "newtype-ts";
 import { TypeNames, VariantOf, fields, variantModule } from "variant";
 
 // identifies names of variables and functions
 export type ValueIdentifier = Newtype<{ readonly Identifier: unique symbol }, string>;
+export const valueIdentifierIso = iso<ValueIdentifier>();
 
 // identifies names of Faust types
 export type TypeIdentifier = Newtype<{ readonly TypeIdentifier: unique symbol }, string>;
+export const typeIdentifierIso = iso<TypeIdentifier>();
 
 const noFields = fields<Record<string, never>>();
 
