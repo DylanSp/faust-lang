@@ -28,17 +28,29 @@ export const Expression = variantModule({
 });
 export type Expression = VariantOf<typeof Expression>;
 
-export const Statement = variantModule({
+// statements with no syntactic sugar, that can't be simplified further
+export const UnsugaredStatement = variantModule({
   statementExpression: fields<{ expression: Expression }>(),
   variableDeclaration: fields<{ name: ValueIdentifier; type: TypeIdentifier; value: Expression }>(),
   variableAssignment: fields<{ name: ValueIdentifier; value: Expression }>(),
   ifStatement: fields<{ condition: Expression; thenBlock: Block; elseBlock: Option<Block> }>(),
   returnStatement: fields<{ returnedValue: Option<Expression> }>(),
   whileLoop: fields<{ condition: Expression; body: Block }>(),
-  doWhileLoop: fields<{ condition: Expression; body: Block }>(),
-  forLoop: fields<{ initializer: Expression; condition: Expression; increment: Expression; body: Block }>,
   // TODO - struct field setting
 });
+export type UnsugaredStatement = VariantOf<typeof UnsugaredStatement>;
+
+// statements with syntactic sugar, that can be simplified to UnsugaredStatements
+export const SugaredStatement = variantModule({
+  doWhileLoop: fields<{ condition: Expression; body: Block }>(),
+  forLoop: fields<{ initializer: Expression; condition: Expression; increment: Expression; body: Block }>,
+});
+export type SugaredStatement = VariantOf<typeof SugaredStatement>;
+
+export const Statement = {
+  ...UnsugaredStatement,
+  ...SugaredStatement,
+};
 export type Statement = VariantOf<typeof Statement>;
 
 export type Block = Array<Statement>;
