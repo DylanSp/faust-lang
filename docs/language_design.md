@@ -3,9 +3,9 @@
 ## Primitive types
 
 - 64-bit integers - `int64`
-- double-precision floating-point - `double`/`fp64`
-- Booleans
-- Strings. These are required to be ASCII (for ease of implementation), but are treated as an opaque type within Faust, without any sort of underlying `char` type.
+- double-precision floating-point - `fp64`
+- Booleans - `bool`
+- Strings - `str`. These are required to be ASCII (for ease of implementation), but are treated as an opaque type within Faust, without any sort of underlying `char` type.
 - Tuples
 - Structs
 - Algebraic data types (that can be pattern-matched on)
