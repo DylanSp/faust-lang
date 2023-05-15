@@ -1,6 +1,6 @@
 import { Option } from "fp-ts/lib/Option";
 import { Newtype } from "newtype-ts";
-import { VariantOf, fields, variantModule } from "variant";
+import { TypeNames, VariantOf, fields, variantModule } from "variant";
 
 // identifies names of variables and functions
 export type ValueIdentifier = Newtype<{ readonly Identifier: unique symbol }, string>;
@@ -31,19 +31,30 @@ export type Expression = VariantOf<typeof Expression>;
 // statements with no syntactic sugar, that can't be simplified further
 export const UnsugaredStatement = variantModule({
   statementExpression: fields<{ expression: Expression }>(),
-  variableDeclaration: fields<{ name: ValueIdentifier; type: TypeIdentifier; value: Expression }>(),
+  variableDeclaration: fields<{ name: ValueIdentifier; faustType: TypeIdentifier; value: Expression }>(),
   variableAssignment: fields<{ name: ValueIdentifier; value: Expression }>(),
   ifStatement: fields<{ condition: Expression; thenBlock: Block; elseBlock: Option<Block> }>(),
   returnStatement: fields<{ returnedValue: Option<Expression> }>(),
   whileLoop: fields<{ condition: Expression; body: Block }>(),
   // TODO - struct field setting
 });
-export type UnsugaredStatement = VariantOf<typeof UnsugaredStatement>;
+
+// use full type definition so I can pull out UnsugaredStatement<"variableDeclaration"> for use in forLoop type definition
+// see https://paarthenon.github.io/variant/docs/articles/that-type/
+export type UnsugaredStatement<T extends TypeNames<typeof UnsugaredStatement> = undefined> = VariantOf<
+  typeof UnsugaredStatement,
+  T
+>;
 
 // statements with syntactic sugar, that can be simplified to UnsugaredStatements
 export const SugaredStatement = variantModule({
   doWhileLoop: fields<{ condition: Expression; body: Block }>(),
-  forLoop: fields<{ initializer: Expression; condition: Expression; increment: Expression; body: Block }>,
+  forLoop: fields<{
+    initializer: UnsugaredStatement<"variableDeclaration">;
+    condition: Expression;
+    increment: Expression;
+    body: Block;
+  }>,
 });
 export type SugaredStatement = VariantOf<typeof SugaredStatement>;
 
