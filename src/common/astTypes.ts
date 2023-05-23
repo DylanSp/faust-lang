@@ -9,11 +9,11 @@ export const valueIdentifierIso = iso<ValueIdentifier>();
 // identifies names of Faust types
 export type TypeIdentifier = Newtype<{ readonly TypeIdentifier: unique symbol }, string>;
 export const typeIdentifierIso = iso<TypeIdentifier>();
+// TODO - does this include field names, or should there be another newtype for those?
 
 export const TopLevelDeclaration = variantModule({
   typeDeclaration: fields<{ name: TypeIdentifier }>(), // TODO - fields
   functionDeclaration: fields<{ name: ValueIdentifier }>(), // TODO - other fields
-  // TODO - anything else?
 });
 export type TopLevelDeclaration = VariantOf<typeof TopLevelDeclaration>;
 
@@ -46,7 +46,8 @@ export type Expression =
   | Variant<"StringLiteral", { value: string }>
   | Variant<"VariableRef", { name: ValueIdentifier }>
   | Variant<"UnaryOperation", { operation: UnaryOperation; operand: Expression }>
-  | Variant<"BinaryOperation", { operation: BinaryOperation; leftOperand: Expression; rightOperand: Expression }>;
+  | Variant<"BinaryOperation", { operation: BinaryOperation; leftOperand: Expression; rightOperand: Expression }>
+  | Variant<"GetStructField", { struct: Expression; fieldName: TypeIdentifier }>;
 export const Expression = typedVariant<Expression>({
   IntLiteral: pass,
   FpLiteral: pass,
@@ -55,8 +56,9 @@ export const Expression = typedVariant<Expression>({
   VariableRef: pass,
   UnaryOperation: pass,
   BinaryOperation: pass,
+  GetStructField: pass,
 });
-// TODO - function calls, field accesses, match expressions
+// TODO - function calls, match expressions
 // NOTE - no lambdas (no higher-order functions) currently
 
 // statements with no syntactic sugar, that can't be simplified further
@@ -67,7 +69,7 @@ export const UnsugaredStatement = variantModule({
   ifStatement: fields<{ condition: Expression; thenBlock: Block; elseBlock: Option<Block> }>(),
   returnStatement: fields<{ returnedValue: Option<Expression> }>(),
   whileLoop: fields<{ condition: Expression; body: Block }>(),
-  // TODO - struct field setting
+  setStructField: fields<{ struct: Expression; fieldName: TypeIdentifier; value: Expression }>(),
 });
 
 // use full type definition so I can pull out specific types for use in the forLoop type definition
