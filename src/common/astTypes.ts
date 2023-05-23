@@ -47,7 +47,8 @@ export type Expression =
   | Variant<"VariableRef", { name: ValueIdentifier }>
   | Variant<"UnaryOperation", { operation: UnaryOperation; operand: Expression }>
   | Variant<"BinaryOperation", { operation: BinaryOperation; leftOperand: Expression; rightOperand: Expression }>
-  | Variant<"GetStructField", { struct: Expression; fieldName: TypeIdentifier }>;
+  | Variant<"GetStructField", { struct: Expression; fieldName: TypeIdentifier }>
+  | Variant<"FunctionCall", { functionName: ValueIdentifier; arguments: Array<Expression> }>;
 export const Expression = typedVariant<Expression>({
   IntLiteral: pass,
   FpLiteral: pass,
@@ -57,9 +58,10 @@ export const Expression = typedVariant<Expression>({
   UnaryOperation: pass,
   BinaryOperation: pass,
   GetStructField: pass,
+  FunctionCall: pass,
 });
-// TODO - function calls, match expressions
-// NOTE - no lambdas (no higher-order functions) currently
+// TODO - match expressions
+// NOTE - no lambdas (due to the lack of higher-order functions) currently
 
 // statements with no syntactic sugar, that can't be simplified further
 export const UnsugaredStatement = variantModule({
