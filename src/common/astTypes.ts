@@ -20,6 +20,23 @@ export type TopLevelDeclaration = VariantOf<typeof TopLevelDeclaration>;
 export const UnaryOperation = variantList(["LogicalNot", "ArithmeticNegation"]);
 export type UnaryOperation = VariantOf<typeof UnaryOperation>;
 
+const ArithmeticBinaryOperation = variantList(["Addition", "Subtraction", "Multiplication", "Division"]);
+const LogicalBinaryOperation = variantList(["And", "Or"]);
+const RelationalBinaryOperation = variantList([
+  "Equal",
+  "NotEqual",
+  "LessThan",
+  "LessThanOrEqual",
+  "GreaterThan",
+  "GreaterThanOrEqual",
+]);
+export const BinaryOperation = {
+  ...ArithmeticBinaryOperation,
+  ...LogicalBinaryOperation,
+  ...RelationalBinaryOperation,
+};
+export type BinaryOperation = VariantOf<typeof BinaryOperation>;
+
 // need to use type-first approach to allow a recursive variant;
 // see https://paarthenon.github.io/variant/docs/use/advanced-creation#typedvariantt
 export type Expression =
@@ -28,7 +45,8 @@ export type Expression =
   | Variant<"BoolLiteral", { value: boolean }>
   | Variant<"StringLiteral", { value: string }>
   | Variant<"VariableRef", { name: ValueIdentifier }>
-  | Variant<"UnaryOperation", { operation: UnaryOperation; operand: Expression }>;
+  | Variant<"UnaryOperation", { operation: UnaryOperation; operand: Expression }>
+  | Variant<"BinaryOperation", { operation: BinaryOperation; leftOperand: Expression; rightOperand: Expression }>;
 export const Expression = typedVariant<Expression>({
   IntLiteral: pass,
   FpLiteral: pass,
@@ -36,8 +54,9 @@ export const Expression = typedVariant<Expression>({
   StringLiteral: pass,
   VariableRef: pass,
   UnaryOperation: pass,
+  BinaryOperation: pass,
 });
-// TODO - binary operations, function calls, field accesses, match expressions
+// TODO - function calls, field accesses, match expressions
 // NOTE - no lambdas (no higher-order functions) currently
 
 // statements with no syntactic sugar, that can't be simplified further
