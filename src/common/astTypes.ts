@@ -65,13 +65,13 @@ export const Expression = typedVariant<Expression>({
 
 // statements with no syntactic sugar, that can't be simplified further
 export const UnsugaredStatement = variantModule({
-  statementExpression: fields<{ expression: Expression }>(),
-  variableDeclaration: fields<{ name: ValueIdentifier; faustType: TypeIdentifier; value: Expression }>(),
-  variableAssignment: fields<{ name: ValueIdentifier; value: Expression }>(),
-  ifStatement: fields<{ condition: Expression; thenBlock: Block; elseBlock: Option<Block> }>(),
-  returnStatement: fields<{ returnedValue: Option<Expression> }>(),
-  whileLoop: fields<{ condition: Expression; body: Block }>(),
-  setStructField: fields<{ struct: Expression; fieldName: TypeIdentifier; value: Expression }>(),
+  StatementExpression: fields<{ expression: Expression }>(),
+  VariableDeclaration: fields<{ name: ValueIdentifier; faustType: TypeIdentifier; value: Expression }>(),
+  VariableAssignment: fields<{ name: ValueIdentifier; value: Expression }>(),
+  IfStatement: fields<{ condition: Expression; thenBlock: Block; elseBlock: Option<Block> }>(),
+  ReturnStatement: fields<{ returnedValue: Option<Expression> }>(),
+  WhileLoop: fields<{ condition: Expression; body: Block }>(),
+  SetStructField: fields<{ struct: Expression; fieldName: TypeIdentifier; value: Expression }>(),
 });
 
 // use full type definition so I can pull out specific types for use in the forLoop type definition
@@ -83,12 +83,12 @@ export type UnsugaredStatement<T extends TypeNames<typeof UnsugaredStatement> = 
 
 // statements with syntactic sugar, that can be simplified to UnsugaredStatements
 export const SugaredStatement = variantModule({
-  doWhileLoop: fields<{ condition: Expression; body: Block }>(),
-  forLoop: fields<{
-    initializer: UnsugaredStatement<"variableDeclaration">;
+  DoWhileLoop: fields<{ condition: Expression; body: Block }>(),
+  ForLoop: fields<{
+    initializer: UnsugaredStatement<"VariableDeclaration">;
     condition: Expression;
     // to figure out what type increment is, use if (isOfType(forLoopStatement.increment, Expression))
-    increment: Expression | UnsugaredStatement<"variableAssignment">;
+    increment: Expression | UnsugaredStatement<"VariableAssignment">;
     body: Block;
   }>(),
 });
