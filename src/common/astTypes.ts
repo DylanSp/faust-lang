@@ -9,7 +9,50 @@ export const valueIdentifierIso = iso<ValueIdentifier>();
 // identifies names of Faust types
 export type TypeIdentifier = Newtype<{ readonly TypeIdentifier: unique symbol }, string>;
 export const typeIdentifierIso = iso<TypeIdentifier>();
-// TODO - does this include field names, or should there be another newtype for those?
+
+// identifies names of fields in Faust structs
+export type FieldIdentifier = Newtype<{ readonly FieldIdentifier: unique symbol }, string>;
+export const fieldIdentifierIso = iso<FieldIdentifier>();
+
+// identifies names of variants in Faust enums
+export type VariantIdentifier = Newtype<{ readonly VariantIdentifier: unique symbol }, string>;
+export const VariantIdentifierIso = iso<VariantIdentifier>();
+
+// identifies type parameters in generic types
+export type TypeParameterIdentifier = Newtype<{ readonly TypeParameterIdentifier: unique symbol }, string>;
+export const typeParameterIdentifierIso = iso<TypeParameterIdentifier>();
+
+type StructFieldDefininition = {
+  name: FieldIdentifier;
+  type: TypeIdentifier;
+};
+
+const VariantData = variantModule({
+  EmptyVariant: {},
+  TupleVariant: fields<{ types: Array<TypeIdentifier> }>(),
+  StructVariant: fields<{ fields: Array<StructFieldDefininition> }>(),
+});
+export type VariantData = VariantOf<typeof VariantData>;
+
+type VariantDeclaration = {
+  name: VariantIdentifier;
+  fields: Array<VariantData>;
+};
+
+// user-defined types (that are represented by TypeDeclaration) are either structs or enums
+export const TypeDeclaration = variantModule({
+  StructDeclaration: fields<{
+    typeParameters: Array<TypeParameterIdentifier>; // empty array = non-generic struct
+    name: TypeIdentifier;
+    fields: Array<StructFieldDefininition>;
+  }>(),
+  EnumDeclaration: fields<{
+    typeParameters: Array<TypeParameterIdentifier>; // empty array = non-generic struct
+    name: TypeIdentifier;
+    variants: Array<VariantDeclaration>;
+  }>(),
+});
+export type TypeDeclaration = VariantOf<typeof TypeDeclaration>;
 
 type FunctionParameterDeclaration = {
   name: ValueIdentifier;
@@ -17,7 +60,7 @@ type FunctionParameterDeclaration = {
 };
 
 export const TopLevelDeclaration = variantModule({
-  TypeDeclaration: fields<{ name: TypeIdentifier }>(), // TODO - fields
+  TypeDeclaration: fields<{ typeDeclaration: TypeDeclaration }>(),
   FunctionDeclaration: fields<{
     name: TypeIdentifier;
     arguments: Array<FunctionParameterDeclaration>;
