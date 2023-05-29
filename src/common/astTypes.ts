@@ -17,8 +17,8 @@ type FunctionParameterDeclaration = {
 };
 
 export const TopLevelDeclaration = variantModule({
-  typeDeclaration: fields<{ name: TypeIdentifier }>(), // TODO - fields
-  functionDeclaration: fields<{
+  TypeDeclaration: fields<{ name: TypeIdentifier }>(), // TODO - fields
+  FunctionDeclaration: fields<{
     name: TypeIdentifier;
     arguments: Array<FunctionParameterDeclaration>;
     returnType: TypeIdentifier;
