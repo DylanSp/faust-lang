@@ -22,7 +22,7 @@ export const VariantIdentifierIso = iso<VariantIdentifier>();
 export type TypeParameterIdentifier = Newtype<{ readonly TypeParameterIdentifier: unique symbol }, string>;
 export const typeParameterIdentifierIso = iso<TypeParameterIdentifier>();
 
-type StructFieldDefininition = {
+type StructFieldDeclaration = {
   name: FieldIdentifier;
   type: TypeIdentifier;
 };
@@ -30,7 +30,7 @@ type StructFieldDefininition = {
 const VariantFields = variantModule({
   EmptyVariant: {},
   TupleVariant: fields<{ types: Array<TypeIdentifier> }>(),
-  StructVariant: fields<{ fields: Array<StructFieldDefininition> }>(),
+  StructVariant: fields<{ fields: Array<StructFieldDeclaration> }>(),
 });
 export type VariantFields = VariantOf<typeof VariantFields>;
 
@@ -39,12 +39,12 @@ type VariantDeclaration = {
   fields: VariantFields;
 };
 
-// user-defined types (that are represented by TypeDeclaration) are either structs or enums
+// user-defined types - can only be structs or enums
 export const TypeDeclaration = variantModule({
   StructDeclaration: fields<{
     typeParameters: Array<TypeParameterIdentifier>; // empty array = non-generic struct
     name: TypeIdentifier;
-    fields: Array<StructFieldDefininition>;
+    fields: Array<StructFieldDeclaration>;
   }>(),
   EnumDeclaration: fields<{
     typeParameters: Array<TypeParameterIdentifier>; // empty array = non-generic struct
