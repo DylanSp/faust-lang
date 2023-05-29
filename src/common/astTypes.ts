@@ -27,16 +27,16 @@ type StructFieldDefininition = {
   type: TypeIdentifier;
 };
 
-const VariantData = variantModule({
+const VariantFields = variantModule({
   EmptyVariant: {},
   TupleVariant: fields<{ types: Array<TypeIdentifier> }>(),
   StructVariant: fields<{ fields: Array<StructFieldDefininition> }>(),
 });
-export type VariantData = VariantOf<typeof VariantData>;
+export type VariantFields = VariantOf<typeof VariantFields>;
 
 type VariantDeclaration = {
   name: VariantIdentifier;
-  fields: Array<VariantData>;
+  fields: VariantFields;
 };
 
 // user-defined types (that are represented by TypeDeclaration) are either structs or enums
