@@ -1,16 +1,18 @@
 # Faust Language Design
 
-## Primitive types
+## Type System
 
 - 64-bit integers - `int64`
 - double-precision floating-point - `fp64`
 - Booleans - `bool`
 - Strings - `str`. These are required to be ASCII (for ease of implementation), but are treated as an opaque type within Faust, without any sort of underlying `char` type.
+- Void/unit type - `void`. Used as the return type for functions that don't return a value.
 - Tuples
 - Structs
-- Algebraic data types (that can be pattern-matched on)
+- Enums - algebraic data types that can be pattern-matched on. Individual variants can be empty, have anonymous fields, or be structs. See my discussion on [this Github issue](https://github.com/DylanSp/faust-lang/issues/15).
 - Fixed-length arrays (always bound-checked)
 - **No** null type (use an Optional ADT instead)
+- Structs, tuples, enums, and arrays can all be generic, taking some number of type parameters.
 
 ## Syntax
 
