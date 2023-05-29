@@ -24,10 +24,6 @@
 
 ### Questions to answer
 
-- How do I want to handle strings in Faust?
-  - Option 1 - include characters as a primitive type, strings are effectively an array of characters. This maps to C semantics fairly well, which will simplify the compiled implementation, but I don't know if I want to expose characters as a separate type in Faust.
-  - Option 2 - include strings as a primitive type, but restrict them to ASCII only. This would allow using basic `libc` functions in the compiled implementation without needing to expose characters as a Faust type.
-  - Option 3 - full Unicode support (presumably via UTF-8). This allows the most flexibility, but it also complicates implementation.
 - How do I want to handle mutability/immutability of variables, and if mutability is allowed, handling references?
   - I'm sort of inclined to start with an approach of everything being immutable, function arguments are copied (passed by value, effectively), for the sake of simplicity. This might make writing example programs more difficult, though.
 
@@ -95,8 +91,8 @@
   - Module system.
 - Adding contract functionality to new features:
   - Struct invariants, similar to [Eiffel's class invariants](https://www.eiffel.org/doc/eiffel/I2E-_Design_by_Contract_and_Assertions)
-    - Public invariants - only checked on calling/returning from public methods, accessing/setting public fields.
-    - Private invariants - checked on calling/returning from _all_ methods, accessing/setting _all_ fields.
+    - Public/external invariants - only checked on calling/returning from public methods, accessing/setting public fields.
+    - Private/internal invariants - checked on calling/returning from _all_ methods, accessing/setting _all_ fields.
 - Implementing all of this functionality in the interpreted implementation.
 
 ### Possible goals
