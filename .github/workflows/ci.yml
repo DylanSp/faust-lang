@@ -1,0 +1,26 @@
+name: Build/Test CI
+
+on:
+  push:
+    branches:
+      - main
+      - "stages/*"
+  pull_request:
+    branches:
+      - main
+      - "stages/*"
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: Install dependencies
+        run: npm ci
+      - name: Build (compile w/ Typescript)
+        run: npm run build
