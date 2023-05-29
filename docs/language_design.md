@@ -25,5 +25,5 @@
 
 ## Type system
 
-- No implicit conversions - built-in functions cast `int64`'s to `double`.
+- No implicit conversions; built-in functions for casting `int64`'s to `fp64`.
 - No overloading functions for ease of implementation.

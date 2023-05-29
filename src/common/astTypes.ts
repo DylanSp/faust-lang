@@ -60,8 +60,15 @@ export const Expression = typedVariant<Expression>({
   GetStructField: pass,
   FunctionCall: pass,
 });
-// TODO - match expressions
 // NOTE - no lambdas (due to the lack of higher-order functions) currently
+
+// TODO - figure out what this type should actually be; it needs to be able to match variant names and destructure tuples/structs
+type Matcher = unknown;
+
+type MatchClause = {
+  matcher: Matcher;
+  body: Block;
+};
 
 // statements with no syntactic sugar, that can't be simplified further
 export const UnsugaredStatement = variantModule({
@@ -72,6 +79,7 @@ export const UnsugaredStatement = variantModule({
   ReturnStatement: fields<{ returnedValue: Option<Expression> }>(),
   WhileLoop: fields<{ condition: Expression; body: Block }>(),
   SetStructField: fields<{ struct: Expression; fieldName: TypeIdentifier; value: Expression }>(),
+  Match: fields<{ argument: Expression; clauses: Array<MatchClause> }>(),
 });
 
 // use full type definition so I can pull out specific types for use in the forLoop type definition
