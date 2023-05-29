@@ -11,9 +11,19 @@ export type TypeIdentifier = Newtype<{ readonly TypeIdentifier: unique symbol },
 export const typeIdentifierIso = iso<TypeIdentifier>();
 // TODO - does this include field names, or should there be another newtype for those?
 
+type FunctionParameterDeclaration = {
+  name: ValueIdentifier;
+  type: TypeIdentifier;
+};
+
 export const TopLevelDeclaration = variantModule({
   typeDeclaration: fields<{ name: TypeIdentifier }>(), // TODO - fields
-  functionDeclaration: fields<{ name: ValueIdentifier }>(), // TODO - other fields
+  functionDeclaration: fields<{
+    name: TypeIdentifier;
+    arguments: Array<FunctionParameterDeclaration>;
+    returnType: TypeIdentifier;
+    body: Block;
+  }>(),
 });
 export type TopLevelDeclaration = VariantOf<typeof TopLevelDeclaration>;
 
