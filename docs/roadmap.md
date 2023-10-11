@@ -108,6 +108,7 @@
 ### Possible goals
 
 - Inferring tests based on contracts.
+  - see ideas in https://buttondown.email/hillelwayne/archive/new-workshop-test-inference/
 - Built-in fuzz tests for contracts (if not already implemented)
   - see https://www.squarefree.com/2014/02/03/fuzzers-love-assertions/
 - Incorporating quantifiers and implication in contracts, to easily quantify over multiple elements, i.e. an `isSorted()` predicate can use `forall i, j in 0..len(list) : i < j implies list[i] <= list[j]`
