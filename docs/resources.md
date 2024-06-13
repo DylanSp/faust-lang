@@ -5,6 +5,8 @@
 - [Eiffel](https://www.eiffel.org/) is the giant in this field.
 - Joe Duffy's [blog posts about Microsoft's Midori project](http://joeduffyblog.com/2015/11/03/blogging-about-midori/); [The Error Model](http://joeduffyblog.com/2016/02/07/the-error-model/) is the post that goes into detail about their contract-based system.
 - Hillel Wayne's [ideas about a modern contract-based language](https://buttondown.email/hillelwayne/archive/six-programming-languages-id-like-to-see/) are also a source of inspiration. Also see [this blog post of his](https://www.hillelwayne.com/post/contracts/) summarizing contracts and referencing existing languages/libraries which use contract-based ideas.
+- The [Dafny language](https://github.com/dafny-lang/dafny) is built for writing verifiable programs, including things like pre/post-conditions and quantified constraints.
+- [Racket](https://docs.racket-lang.org/guide/contracts.html) has a contract system built in.
 
 ## Implementation
 
